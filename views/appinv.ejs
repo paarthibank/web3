@@ -1,0 +1,36 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/invite.css">
+</head>
+<body>
+	<div class='themainbox'>
+		<div class="login" id="log"><%= name %></div>
+		<img id="sex" src="<%=sex%>">
+
+		<a href="/home.jpg" target="a"><button>Announcements</button></a>
+		<button>Registered</button>
+		<form action="\auth\invitations" method="GET"target="a"><button>Invitations</button></form></a>
+		<button>Private Invitations</button>
+	</div>
+
+	<script type="text/javascript" src="/ab.js"></script>
+	<div class="themainbox2">
+		<% for(var i=0;i<5; i++){ %>
+
+
+	<div class="box">
+		<div class="boxf">
+		<%=name%>	<img src="/<%=image%>">
+			
+		</div>
+		<div class="boxb">
+			<%=description%>
+		</div>
+	</div>
+	<%}%>	
+	</div>
+	
+	
+</body>
+
+</html>

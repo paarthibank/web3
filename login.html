@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Login Form Tutorial</title>
+		<style>
+		.login-form {
+			width: 300px;
+			margin: auto;
+			margin-top: 100px;
+			font-family: Tahoma, Geneva, sans-serif;
+		}
+		.login-form h1 {
+			text-align: center;
+			color: #4d4d4d;
+			font-size: 24px;
+			padding: 20px 0 20px 0;
+		}
+		.login-form input[type="password"],
+		.login-form input[type="number"] {
+			width: 100%;
+			padding: 15px;
+			border: 1px solid #dddddd;
+			margin-bottom: 15px;
+			box-sizing:border-box;
+		}
+		.login-form input[type=number]::-webkit-inner-spin-button, 
+		.login-form input[type=number]::-webkit-outer-spin-button { 
+  				-webkit-appearance: none; 
+  				margin: 0; 
+		}
+		.login-form input[type="submit"] {
+			width: 100%;
+			padding: 15px;
+			margin-bottom: 20px;
+			background-color: #535b63;
+			border: 0;
+			box-sizing: border-box;
+			border-radius: 10px;
+			cursor: pointer;
+			font-weight: bold;
+			color: #ffffff;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="login-form">
+			<h1>Login Form</h1>
+			<form action="/auth" method="POST">
+				<input type="number" name="roll_no" placeholder="Roll No" required min="100000000" max="999999999">
+				<input type="password" name="password" placeholder="Password" required>
+				<input type="submit">
+			</form>
+			New User???<a href="/signup
+			.html">Click here to signup</a>
+		</div>
+		
+	</body>
+</html>

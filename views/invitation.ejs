@@ -1,0 +1,27 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="/invite.css">
+</head>
+<body>
+	<% for(var i=0;i<n.length; i++){ %>
+
+
+	<div class="box">
+		<div class="boxf">
+		<%=n[i].name%>	<img src="/<%=n[i].image%>">
+			
+		</div>
+		<div class="boxb">
+			<br><br><br><br><%=n[i].description%><br><br><br>
+
+			<form action="invitations/reg" target="_parent" method="POST">
+				<input type="text" value="<%=n[i].name%>" name="name"><br><br>
+				<button>REGISTER</button></form>
+
+		</div>
+	</div>
+	<%}%>	
+	
+</body>
+
+</html>
