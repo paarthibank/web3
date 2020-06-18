@@ -11,13 +11,15 @@ var LocalStrategy=require("passport-local");
 var path=require("path");
 var log;
 var roll_no;
+var logged;
+
 exp.use(bodyParser.json());
 exp.use(bodyParser.urlencoded({extended : true}));
 exp.use(express.static('public'));
 exp.use(session({
 	secret:'secret',
-	resave: false,
-	saveUninitialized: false 
+	resave: true,
+	saveUninitialized: true
 
 }))
 var con = mysql.createConnection({
@@ -50,7 +52,9 @@ con.query("CREATE TABLE IF NOT EXISTS box(Name varchar(10) not null,Image varcha
 con.query("CREATE TABLE IF NOT EXISTs register(Name varchar(10) not null,Roll_no int not null default 0)",function(err){if(err) throw err;})
 
 exp.get('/', function(req, res) {
+	req.session = null;
     res.sendFile(path.join(__dirname + '/login.html'));
+
 });
 
 
@@ -59,6 +63,7 @@ exp.post('/auth', function(request, response) {
 	roll_no = request.body.roll_no;
 	console.log('logged');
 	var password = request.body.password;
+	
 	if (roll_no && password) {
 		con.query('SELECT * FROM myweb WHERE Roll_no = ? AND Password = ?', [roll_no, password], function(error, results, fields) {
 			if (results.length > 0) {
@@ -66,10 +71,13 @@ exp.post('/auth', function(request, response) {
 				request.session.sex=results[0].Sex;
 				request.session.priv=results[0].Private;
 				request.session.loggedin=true;
+
 				
 				
 				//response.render("app.ejs", log);
 				response.redirect("/home");
+
+
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
@@ -81,8 +89,11 @@ exp.post('/auth', function(request, response) {
 	}
 });
 exp.get("/logout",function(request,response){
-	request.session.loggedin=false;
+	request.session.loggedin=false; 
 	response.redirect('/');
+	request.session = null;
+
+
 })
 exp.get('/home',function(request,response){
 	if(request.session.loggedin){
@@ -92,6 +103,7 @@ exp.get('/home',function(request,response){
 					priv: request.session.priv
 				};
 	response.render("app.ejs",log);
+	response.end();
 }
 else response.redirect("/");
 })
@@ -130,8 +142,6 @@ exp.post('/sign',function(req,res){
 		res.end();
 	}
 })
-
-
 exp.get("/auth/create",function(req,res){
 	res.render("create.ejs")
 })
@@ -192,6 +202,7 @@ exp.get("/auth/priv",function(req,res){
 	res.render("priv.ejs");
 	res.end();
 })
+
 
 
 
