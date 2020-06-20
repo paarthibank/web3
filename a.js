@@ -44,17 +44,17 @@ con.connect(function(err) {
   }
   console.log("Connected!");
 });
-con.query("CREATE DATABASE IF NOT EXISTS mywebweb");
+con.query("CREATE DATABASE IF NOT EXISTS myweb");
 con.query("USE myweb");
 con.query("CREATE TABLE IF NOT EXISTS myweb(Roll_no int primary key not null,Name varchar(20) not null, Department varchar(15) not null,Sex varchar(1) not null,Year int not null,Password varchar(20) not null,Private int default 0)",function(err){if(err) throw err;});
-con.query("CREATE TABLE IF NOT EXISTS invite(Roll_no int primary key not null,carbaret int not null default 0,disco int not null default 0)",function(err){if(err) throw err;});
-con.query("CREATE TABLE IF NOT EXISTS box(Name varchar(10) not null,Image varchar(10) not null,Description varchar(40) not null)",function(err){if(err) throw err;});
-con.query("CREATE TABLE IF NOT EXISTs register(Name varchar(10) not null,Roll_no int not null default 0)",function(err){if(err) throw err;})
+con.query("CREATE TABLE IF NOT EXISTS box(Name varchar(10) not null,Image varchar(25) not null,Description varchar(40) not null)",function(err){if(err) throw err;});
+con.query("CREATE TABLE IF NOT EXISTS register(Name varchar(10) not null,Roll_no int not null default 0)",function(err){if(err) throw err;})
 
 exp.get('/', function(req, res) {
+	
 	req.session = null;
-    res.sendFile(path.join(__dirname + '/login.html'));
 
+    res.sendFile(path.join(__dirname + '/login.html'));
 });
 
 
@@ -152,9 +152,10 @@ exp.post('/auth/create/inv',upload.single("pic"),function(req,res){
 	var description=req.body.description;
 	const file =req.file;
 	console.log(file);
+	console.log(name+image+description);
 	
-	con.query("INSERT INTO box(Name,Image,Description) VALUES (?,?,?)",[name,image,description],function(errr,result,field){
-		console.log(log);
+	con.query("INSERT INTO box(Name,Image,Description) VALUES (?,?,?)",[name,image,description],function(err,result,field){
+		if(err) throw err;
 		res.redirect("/home");
 		res.end();
 	})
